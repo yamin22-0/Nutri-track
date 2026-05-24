@@ -1,0 +1,278 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Aisha Hassan",
+      "email": "aisha@example.com",
+      "password": "password123",
+      "height": 165,
+      "weight": 65,
+      "goal": "maintain",
+      "location": "Garissa",
+      "createdAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "yxs7LM3FXdQ",
+      "name": "Binka jr",
+      "email": "binyamin23@gmail.com",
+      "password": "123456",
+      "height": 213,
+      "weight": 89,
+      "goal": "maintain",
+      "createdAt": "2026-05-21T10:41:37.051Z"
+    },
+    {
+      "id": "zd8Xm56Y3QY",
+      "name": "Binka",
+      "email": "binka@gmail.com",
+      "password": "123456",
+      "height": 213,
+      "weight": 56,
+      "goal": "maintain",
+      "createdAt": "2026-05-24T09:16:22.966Z"
+    }
+  ],
+  "meals": [
+    {
+      "id": "1",
+      "userId": "yxs7LM3FXdQ",
+      "name": "Chapati with Sukuma Wiki",
+      "calories": 450,
+      "protein": 12,
+      "carbs": 65,
+      "fat": 15,
+      "mealType": "breakfast",
+      "date": "2026-05-21"
+    },
+    {
+      "id": "2",
+      "userId": "yxs7LM3FXdQ",
+      "name": "Mandazi",
+      "calories": 250,
+      "protein": 4,
+      "carbs": 35,
+      "fat": 10,
+      "mealType": "snack",
+      "date": "2026-05-21"
+    },
+    {
+      "id": "3",
+      "userId": "yxs7LM3FXdQ",
+      "name": "Pilau with Beef",
+      "calories": 620,
+      "protein": 28,
+      "carbs": 75,
+      "fat": 22,
+      "mealType": "dinner",
+      "date": "2026-05-21"
+    },
+    {
+      "id": "4",
+      "userId": "zd8Xm56Y3QY",
+      "name": "Chapati with Sukuma Wiki",
+      "calories": 450,
+      "protein": 12,
+      "carbs": 65,
+      "fat": 15,
+      "mealType": "breakfast",
+      "date": "2026-05-24"
+    },
+    {
+      "id": "6",
+      "userId": "zd8Xm56Y3QY",
+      "name": "Pilau with Beef",
+      "calories": 620,
+      "protein": 28,
+      "carbs": 75,
+      "fat": 22,
+      "mealType": "dinner",
+      "date": "2026-05-24"
+    },
+    {
+      "userId": "zd8Xm56Y3QY",
+      "name": "Nyama Choma (Grilled Meat)",
+      "calories": 350,
+      "protein": 35,
+      "carbs": 0,
+      "fat": 22,
+      "mealType": "lunch",
+      "date": "2026-05-24",
+      "createdAt": "2026-05-24T10:41:07.488Z",
+      "id": "RvWVcCb3Nts"
+    },
+    {
+      "userId": "zd8Xm56Y3QY",
+      "name": "Samaki wa Kupaka (Coconut Fish)",
+      "calories": 420,
+      "protein": 32,
+      "carbs": 12,
+      "fat": 28,
+      "mealType": "dinner",
+      "date": "2026-05-24",
+      "createdAt": "2026-05-24T10:41:38.907Z",
+      "id": "jmNd_lpcaH0"
+    }
+  ],
+  "goals": [
+    {
+      "id": "1",
+      "userId": "yxs7LM3FXdQ",
+      "dailyCalories": 2200,
+      "protein": 140,
+      "carbs": 250,
+      "fat": 55,
+      "water": 2500,
+      "targetWeight": 70,
+      "createdAt": "2026-05-21T10:43:54.881Z"
+    },
+    {
+      "id": "2",
+      "userId": "zd8Xm56Y3QY",
+      "dailyCalories": 2200,
+      "protein": 140,
+      "carbs": 250,
+      "fat": 55,
+      "water": 2500,
+      "targetWeight": 70,
+      "createdAt": "2026-05-24T09:16:23.082Z"
+    }
+  ],
+  "foods": [
+    {
+      "id": "1",
+      "name": "Chapati",
+      "calories": 300,
+      "protein": 6,
+      "carbs": 45,
+      "fat": 10,
+      "category": "bread"
+    },
+    {
+      "id": "2",
+      "name": "Sukuma Wiki (Kales)",
+      "calories": 50,
+      "protein": 3,
+      "carbs": 8,
+      "fat": 1,
+      "category": "vegetable"
+    },
+    {
+      "id": "3",
+      "name": "Nyama Choma (Grilled Meat)",
+      "calories": 350,
+      "protein": 35,
+      "carbs": 0,
+      "fat": 22,
+      "category": "protein"
+    },
+    {
+      "id": "4",
+      "name": "Ugali",
+      "calories": 350,
+      "protein": 8,
+      "carbs": 75,
+      "fat": 2,
+      "category": "grain"
+    },
+    {
+      "id": "5",
+      "name": "Mandazi",
+      "calories": 250,
+      "protein": 4,
+      "carbs": 35,
+      "fat": 10,
+      "category": "snack"
+    },
+    {
+      "id": "6",
+      "name": "Pilau",
+      "calories": 500,
+      "protein": 15,
+      "carbs": 70,
+      "fat": 18,
+      "category": "rice"
+    },
+    {
+      "id": "7",
+      "name": "Maharagwe (Beans Stew)",
+      "calories": 180,
+      "protein": 12,
+      "carbs": 28,
+      "fat": 4,
+      "category": "legume"
+    },
+    {
+      "id": "8",
+      "name": "Kachumbari (Tomato Onion Salad)",
+      "calories": 30,
+      "protein": 1,
+      "carbs": 6,
+      "fat": 0,
+      "category": "salad"
+    },
+    {
+      "id": "9",
+      "name": "Mukimo (Mashed Potatoes with Veggies)",
+      "calories": 320,
+      "protein": 8,
+      "carbs": 55,
+      "fat": 8,
+      "category": "main"
+    },
+    {
+      "id": "10",
+      "name": "Uji (Fermented Porridge)",
+      "calories": 180,
+      "protein": 4,
+      "carbs": 38,
+      "fat": 2,
+      "category": "breakfast"
+    },
+    {
+      "id": "11",
+      "name": "Samaki wa Kupaka (Coconut Fish)",
+      "calories": 420,
+      "protein": 32,
+      "carbs": 12,
+      "fat": 28,
+      "category": "protein"
+    },
+    {
+      "id": "12",
+      "name": "Viazi Karai (Spiced Potatoes)",
+      "calories": 280,
+      "protein": 5,
+      "carbs": 42,
+      "fat": 10,
+      "category": "snack"
+    },
+    {
+      "id": "13",
+      "name": "Bajia (Onion Fritters)",
+      "calories": 320,
+      "protein": 6,
+      "carbs": 35,
+      "fat": 18,
+      "category": "snack"
+    },
+    {
+      "id": "14",
+      "name": "Mbaazi za Nazi (Pigeon Peas in Coconut)",
+      "calories": 350,
+      "protein": 14,
+      "carbs": 40,
+      "fat": 16,
+      "category": "legume"
+    },
+    {
+      "id": "15",
+      "name": "Matoke (Plantain Stew)",
+      "calories": 220,
+      "protein": 3,
+      "carbs": 55,
+      "fat": 4,
+      "category": "main"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
