@@ -1,180 +1,274 @@
 import { useState, useEffect } from 'react'
 
-function Navbar({ theme, toggleTheme }) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
+const NAV_LINKS = [
+  { label: 'Home',         href: '/',           section: null        },
+  { label: 'Features',     href: '/#features',  section: 'features'  },
+  { label: 'How It Works', href: '/#how-it-works', section: 'how-it-works' },
+  { label: 'Testimonials', href: '/#testimonials', section: 'testimonials' },
+  { label: 'Pricing',      href: '/#pricing',   section: 'pricing'   },
+  { label: 'Contact',      href: '/#contact',   section: 'contact'   },
+]
 
-  const isLoggedIn = localStorage.getItem('token')
+function scrollToSection(sectionId) {
+  const el = document.getElementById(sectionId)
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+}
+
+export default function Navbar({ theme, toggleTheme }) {
+  const [scrolled, setScrolled]   = useState(false)
+  const [isMenuOpen, setMenuOpen] = useState(false)
+
+  const isLoggedIn = !!localStorage.getItem('token')
 
   useEffect(() => {
-    const root = document.documentElement
-    if (theme === 'dark') {
-      root.classList.add('dark')
-    } else {
-      root.classList.remove('dark')
-    }
-  }, [theme])
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
+    const handler = () => setScrolled(window.scrollY > 20)
+    window.addEventListener('scroll', handler)
+    return () => window.removeEventListener('scroll', handler)
   }, [])
 
   useEffect(() => {
-    const onResize = () => { if (window.innerWidth >= 768) setIsMenuOpen(false) }
+    const onResize = () => { if (window.innerWidth >= 768) setMenuOpen(false) }
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   }, [])
 
-  const handleLogout = () => {
+  // Apply dark class to <html>
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }, [theme])
+
+  function handleNavClick(e, link) {
+    e.preventDefault()
+    setMenuOpen(false)
+    // If we're on the landing page already, just scroll
+    if (window.location.pathname === '/') {
+      if (link.section) {
+        scrollToSection(link.section)
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }
+    } else {
+      // Navigate to landing page with hash, then scroll handled by useEffect on landing page
+      window.location.href = link.href
+    }
+  }
+
+  function handleLogout() {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
     window.location.href = '/'
   }
 
-  const scrollToSection = (sectionId) => {
-    if (window.location.pathname !== '/') {
-      window.location.href = `/#${sectionId}`;
-      return;
-    }
-    const section = document.getElementById(sectionId)
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' })
-    }
-    setIsMenuOpen(false)
-  }
-
   return (
-    <nav className={['lp-nav', scrolled ? 'scrolled' : ''].join(' ')}>
-      <div className="lp-nav-inner">
+    <>
+      <style>{navCss}</style>
+      <nav className={`lp-nav ${scrolled ? 'scrolled' : ''}`}>
+        <div className="lp-nav-inner">
 
-        {/* LOGO */}
-        <div
-          className="lp-logo"
-          onClick={() => (window.location.href = '/')}
-          style={{ cursor: 'pointer' }}
-        >
-          <div className="lp-logo-mark">♥</div>
-          <span 
-            className="lp-logo-text"
-            style={{ 
-              color: theme === 'dark' ? '#F5F0E8' : '#2C2419'
-            }}
-          >
-            NutriTrack
-          </span>
+          {/* Logo */}
+          <div className="lp-logo" onClick={() => window.location.href = '/'}>
+            <div className="lp-logo-mark">♥</div>
+            <span className="lp-logo-text">NutriTrack</span>
+          </div>
+
+          {/* Desktop centre links — only show on landing page */}
+          {!isLoggedIn && (
+            <div className="lp-nav-links">
+              {NAV_LINKS.map(link => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="lp-nav-link"
+                  onClick={e => handleNavClick(e, link)}
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          )}
+
+          {isLoggedIn && (
+            <div className="lp-nav-links">
+              <a className="lp-nav-link" href="/dashboard">Dashboard</a>
+              <a className="lp-nav-link" href="/food-log">Food Log</a>
+              <a className="lp-nav-link" href="/analytics">Analytics</a>
+            </div>
+          )}
+
+          {/* Right side */}
+          <div className="lp-nav-right">
+            {!isLoggedIn ? (
+              <>
+                <a className="lp-nav-link" href="/login">Login</a>
+                <button className="lp-nav-cta" onClick={() => window.location.href = '/register'}>
+                  Sign Up
+                </button>
+              </>
+            ) : (
+              <button className="lp-nav-logout" onClick={handleLogout}>Sign Out</button>
+            )}
+
+            <button className="lp-theme-btn" onClick={toggleTheme} aria-label="Toggle theme">
+              {theme === 'light' ? '🌙' : '☀️'}
+            </button>
+
+            <button className="lp-hamburger" onClick={() => setMenuOpen(p => !p)} aria-label="Menu">
+              {isMenuOpen ? '✕' : '☰'}
+            </button>
+          </div>
         </div>
 
-        {/* DESKTOP CENTRE LINKS - When NOT logged in (Landing Page) */}
-        {!isLoggedIn ? (
-          <div className="lp-nav-links">
-            <span className="lp-nav-link" onClick={() => scrollToSection('home')}>Home</span>
-            <span className="lp-nav-link" onClick={() => scrollToSection('features')}>Features</span>
-            <span className="lp-nav-link" onClick={() => scrollToSection('how-it-works')}>How It Works</span>
-            <span className="lp-nav-link" onClick={() => scrollToSection('testimonials')}>Testimonials</span>
-            <span className="lp-nav-link" onClick={() => scrollToSection('pricing')}>Pricing</span>
-            <span className="lp-nav-link" onClick={() => scrollToSection('contact')}>Contact</span>
-          </div>
-        ) : (
-          /* DESKTOP CENTRE LINKS - When logged in */
-          <div className="lp-nav-links">
-            <span className="lp-nav-link" onClick={() => (window.location.href = '/dashboard')}>
-              Dashboard
-            </span>
-            <span className="lp-nav-link" onClick={() => (window.location.href = '/food-log')}>
-              Food Log
-            </span>
-            <span className="lp-nav-link" onClick={() => (window.location.href = '/my-food-list')}>
-              My Food List
-            </span>
-            <span className="lp-nav-link" onClick={() => (window.location.href = '/analytics')}>
-              Analytics
-            </span>
-            <span className="lp-nav-link" onClick={() => (window.location.href = '/goals')}>
-              Goals
-            </span>
-            <span className="lp-nav-link" onClick={() => (window.location.href = '/profile')}>
-              Profile
+        {/* Mobile menu */}
+        {isMenuOpen && (
+          <div className="lp-mobile-menu">
+            {!isLoggedIn ? (
+              <>
+                {NAV_LINKS.map(link => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    className="lp-mobile-link"
+                    onClick={e => handleNavClick(e, link)}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+                <a className="lp-mobile-link lp-mobile-cta" href="/register">Sign Up Free</a>
+              </>
+            ) : (
+              <>
+                <a className="lp-mobile-link" href="/dashboard">Dashboard</a>
+                <a className="lp-mobile-link" href="/food-log">Food Log</a>
+                <a className="lp-mobile-link" href="/analytics">Analytics</a>
+                <span className="lp-mobile-link lp-mobile-logout" onClick={handleLogout}>Sign Out</span>
+              </>
+            )}
+            <span className="lp-mobile-link" onClick={() => { toggleTheme(); setMenuOpen(false) }}>
+              {theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'}
             </span>
           </div>
         )}
-
-        {/* DESKTOP RIGHT */}
-        <div className="lp-nav-right">
-          {!isLoggedIn ? (
-            <>
-              <button
-                className="lp-nav-link"
-                onClick={() => (window.location.href = '/login')}
-                style={{ background: 'transparent', padding: '0.55rem 0' }}
-              >
-                Login
-              </button>
-              <button
-                className="lp-nav-cta"
-                onClick={() => (window.location.href = '/register')}
-              >
-                Sign Up
-              </button>
-            </>
-          ) : (
-            <button className="lp-nav-logout" onClick={handleLogout}>
-              Logout
-            </button>
-          )}
-
-          {/* Theme toggle */}
-          <button className="lp-theme-btn" onClick={toggleTheme} aria-label="Toggle theme">
-            {theme === 'light' ? '🌙' : '☀️'}
-          </button>
-
-          {/* Mobile hamburger */}
-          <button
-            className="lp-hamburger"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? '✕' : '☰'}
-          </button>
-        </div>
-      </div>
-
-      {/* MOBILE MENU */}
-      {isMenuOpen && (
-        <div className="lp-mobile-menu">
-          {!isLoggedIn ? (
-            <>
-              <span className="lp-mobile-link" onClick={() => scrollToSection('home')}>Home</span>
-              <span className="lp-mobile-link" onClick={() => scrollToSection('features')}>Features</span>
-              <span className="lp-mobile-link" onClick={() => scrollToSection('how-it-works')}>How It Works</span>
-              <span className="lp-mobile-link" onClick={() => scrollToSection('testimonials')}>Testimonials</span>
-              <span className="lp-mobile-link" onClick={() => scrollToSection('pricing')}>Pricing</span>
-              <span className="lp-mobile-link" onClick={() => scrollToSection('contact')}>Contact</span>
-              <div className="h-px bg-gray-200 dark:bg-gray-700 my-2"></div>
-              <span className="lp-mobile-link" onClick={() => (window.location.href = '/login')}>Login</span>
-              <span className="lp-mobile-link lp-mobile-cta" onClick={() => (window.location.href = '/register')}>Sign Up</span>
-            </>
-          ) : (
-            <>
-              <span className="lp-mobile-link" onClick={() => (window.location.href = '/dashboard')}>Dashboard</span>
-              <span className="lp-mobile-link" onClick={() => (window.location.href = '/food-log')}>Food Log</span>
-              <span className="lp-mobile-link" onClick={() => (window.location.href = '/my-food-list')}>My Food List</span>
-              <span className="lp-mobile-link" onClick={() => (window.location.href = '/analytics')}>Analytics</span>
-              <span className="lp-mobile-link" onClick={() => (window.location.href = '/goals')}>Goals</span>
-              <span className="lp-mobile-link" onClick={() => (window.location.href = '/profile')}>Profile</span>
-              <div className="h-px bg-gray-200 dark:bg-gray-700 my-2"></div>
-              <span className="lp-mobile-link lp-mobile-logout" onClick={handleLogout}>Logout</span>
-            </>
-          )}
-          <div className="h-px bg-gray-200 dark:bg-gray-700 my-2"></div>
-          <span className="lp-mobile-link" onClick={toggleTheme}>
-            {theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'}
-          </span>
-        </div>
-      )}
-    </nav>
+      </nav>
+    </>
   )
 }
 
-export default Navbar
+const navCss = `
+  .lp-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(245,240,232,0.92);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(44,36,25,0.08);
+    transition: box-shadow 0.3s ease, background 0.3s ease;
+  }
+  .dark .lp-nav { background: rgba(15,15,15,0.92); border-bottom-color: rgba(255,255,255,0.06); }
+  .lp-nav.scrolled { box-shadow: 0 2px 24px rgba(44,36,25,0.07); }
+  .dark .lp-nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,0.4); }
+
+  .lp-nav-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+    height: 64px; display: flex; align-items: center;
+    justify-content: space-between; gap: 1.5rem;
+  }
+
+  .lp-logo {
+    display: flex; align-items: center; gap: 0.5rem;
+    text-decoration: none; flex-shrink: 0; cursor: pointer;
+  }
+  .lp-logo-mark {
+    width: 32px; height: 32px; background: var(--color-moss);
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; color: white; font-size: 14px; flex-shrink: 0;
+  }
+  .lp-logo-text {
+    font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700;
+    color: var(--color-bark); letter-spacing: -0.02em; white-space: nowrap;
+  }
+  .dark .lp-logo-text { color: #F5F0E8; }
+
+  .lp-nav-links {
+    display: flex; align-items: center; gap: 0.25rem;
+    flex: 1; justify-content: center;
+  }
+  .lp-nav-link {
+    font-size: 0.825rem; font-weight: 400; color: var(--color-warm-mid);
+    letter-spacing: 0.01em; cursor: pointer; text-decoration: none;
+    padding: 0.4rem 0.75rem; border-radius: 8px;
+    transition: color 0.2s, background 0.2s; white-space: nowrap;
+  }
+  .lp-nav-link:hover { color: var(--color-bark); background: rgba(44,36,25,0.05); }
+  .dark .lp-nav-link { color: #94a3b8; }
+  .dark .lp-nav-link:hover { color: #F5F0E8; background: rgba(255,255,255,0.05); }
+
+  .lp-nav-right { display: flex; align-items: center; gap: 0.6rem; flex-shrink: 0; }
+
+  .lp-nav-cta {
+    font-family: var(--font-sans); font-size: 0.825rem; font-weight: 500;
+    color: var(--color-cream); background: var(--color-bark);
+    border: none; border-radius: 100px; padding: 0.55rem 1.25rem;
+    cursor: pointer; white-space: nowrap; transition: background 0.2s, transform 0.15s;
+  }
+  .lp-nav-cta:hover { background: var(--color-moss); transform: translateY(-1px); }
+  .dark .lp-nav-cta { background: var(--color-moss); }
+
+  .lp-nav-logout {
+    font-family: var(--font-sans); font-size: 0.825rem; font-weight: 400;
+    color: #ef4444; background: transparent; border: 1px solid #ef4444;
+    border-radius: 100px; padding: 0.5rem 1.1rem; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .lp-nav-logout:hover { background: rgba(239,68,68,0.07); }
+
+  .lp-theme-btn {
+    width: 34px; height: 34px; border-radius: 50%;
+    border: 1px solid rgba(44,36,25,0.15); background: transparent;
+    cursor: pointer; font-size: 0.95rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .lp-theme-btn:hover { background: rgba(44,36,25,0.06); }
+  .dark .lp-theme-btn { border-color: rgba(255,255,255,0.12); }
+
+  .lp-hamburger {
+    display: none; width: 36px; height: 36px; border-radius: 8px;
+    border: 1px solid rgba(44,36,25,0.15); background: transparent;
+    cursor: pointer; font-size: 1rem;
+    align-items: center; justify-content: center; transition: background 0.2s;
+    color: var(--color-bark);
+  }
+  .lp-hamburger:hover { background: rgba(44,36,25,0.06); }
+  .dark .lp-hamburger { border-color: rgba(255,255,255,0.12); color: #F5F0E8; }
+
+  .lp-mobile-menu {
+    display: flex; flex-direction: column; gap: 0.25rem;
+    padding: 0.75rem 1.5rem 1.25rem;
+    border-top: 1px solid rgba(44,36,25,0.08);
+    max-width: 1200px; margin: 0 auto;
+  }
+  .dark .lp-mobile-menu { border-top-color: rgba(255,255,255,0.06); }
+
+  .lp-mobile-link {
+    padding: 0.65rem 0.75rem; border-radius: 10px; font-size: 0.9rem;
+    color: var(--color-bark); cursor: pointer; text-decoration: none;
+    display: block; transition: background 0.15s;
+  }
+  .lp-mobile-link:hover { background: rgba(44,36,25,0.05); }
+  .dark .lp-mobile-link { color: #F5F0E8; }
+  .dark .lp-mobile-link:hover { background: rgba(255,255,255,0.05); }
+  .lp-mobile-cta { background: var(--color-bark); color: var(--color-cream) !important; text-align: center; margin-top: 0.25rem; }
+  .lp-mobile-cta:hover { background: var(--color-moss) !important; }
+  .lp-mobile-logout { color: #ef4444 !important; }
+
+  @media (max-width: 768px) {
+    .lp-nav-inner { padding: 0 1.25rem; }
+    .lp-nav-links { display: none; }
+    .lp-nav-cta, .lp-nav-logout { display: none; }
+    .lp-hamburger { display: flex; }
+  }
+`

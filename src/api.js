@@ -85,9 +85,20 @@ export async function addMeal(meal) {
   return res.json()
 }
 
+// PATCH — partial update (one or more fields)
 export async function updateMeal(id, data) {
   const res = await fetch(`${BASE}/meals/${id}`, {
     method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  })
+  return res.json()
+}
+
+// PUT — full replacement
+export async function replaceMeal(id, data) {
+  const res = await fetch(`${BASE}/meals/${id}`, {
+    method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   })
@@ -127,11 +138,31 @@ export async function saveGoal(goal) {
   return create.json()
 }
 
+// PUT — full goal replacement
+export async function replaceGoal(id, goal) {
+  const res = await fetch(`${BASE}/goals/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(goal),
+  })
+  return res.json()
+}
+
 // ── USER ─────────────────────────────────────────
 
 export async function updateUser(userId, data) {
   const res = await fetch(`${BASE}/users/${userId}`, {
     method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  })
+  return res.json()
+}
+
+// PUT — full user replacement
+export async function replaceUser(userId, data) {
+  const res = await fetch(`${BASE}/users/${userId}`, {
+    method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   })
@@ -169,4 +200,28 @@ export async function addFood(food) {
     body: JSON.stringify(food),
   })
   return res.json()
+}
+
+// PATCH — partial food update
+export async function updateFood(id, data) {
+  const res = await fetch(`${BASE}/foods/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  })
+  return res.json()
+}
+
+// PUT — full food replacement
+export async function replaceFood(id, data) {
+  const res = await fetch(`${BASE}/foods/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  })
+  return res.json()
+}
+
+export async function deleteFood(id) {
+  await fetch(`${BASE}/foods/${id}`, { method: 'DELETE' })
 }

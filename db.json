@@ -78,6 +78,17 @@
       "date": "2026-05-24"
     },
     {
+      "id": "5",
+      "userId": "zd8Xm56Y3QY",
+      "name": "Nyama Choma with Kachumbari",
+      "calories": 580,
+      "protein": 42,
+      "carbs": 8,
+      "fat": 28,
+      "mealType": "lunch",
+      "date": "2026-05-24"
+    },
+    {
       "id": "6",
       "userId": "zd8Xm56Y3QY",
       "name": "Pilau with Beef",
@@ -89,28 +100,63 @@
       "date": "2026-05-24"
     },
     {
+      "id": "7",
       "userId": "zd8Xm56Y3QY",
-      "name": "Nyama Choma (Grilled Meat)",
-      "calories": 350,
-      "protein": 35,
-      "carbs": 0,
-      "fat": 22,
-      "mealType": "lunch",
-      "date": "2026-05-24",
-      "createdAt": "2026-05-24T10:41:07.488Z",
-      "id": "RvWVcCb3Nts"
+      "name": "Mandazi",
+      "calories": 250,
+      "protein": 4,
+      "carbs": 35,
+      "fat": 10,
+      "mealType": "snack",
+      "date": "2026-05-24"
     },
     {
       "userId": "zd8Xm56Y3QY",
-      "name": "Samaki wa Kupaka (Coconut Fish)",
-      "calories": 420,
-      "protein": 32,
-      "carbs": 12,
-      "fat": 28,
-      "mealType": "dinner",
-      "date": "2026-05-24",
-      "createdAt": "2026-05-24T10:41:38.907Z",
-      "id": "jmNd_lpcaH0"
+      "name": "Chapati",
+      "calories": 300,
+      "protein": 6,
+      "carbs": 45,
+      "fat": 10,
+      "mealType": "breakfast",
+      "date": "2026-05-28",
+      "createdAt": "2026-05-28T12:31:46.422Z",
+      "id": "4E3MgKahuOw"
+    },
+    {
+      "userId": "zd8Xm56Y3QY",
+      "name": "Ugali",
+      "calories": 350,
+      "protein": 8,
+      "carbs": 75,
+      "fat": 2,
+      "mealType": "lunch",
+      "date": "2026-05-28",
+      "createdAt": "2026-05-28T12:32:41.586Z",
+      "id": "WaQDQma378A"
+    },
+    {
+      "userId": "zd8Xm56Y3QY",
+      "name": "Matoke (Plantain Stew)",
+      "calories": 220,
+      "protein": 3,
+      "carbs": 55,
+      "fat": 4,
+      "mealType": "lunch",
+      "date": "2026-05-29",
+      "createdAt": "2026-05-29T03:20:13.990Z",
+      "id": "AyVarAgpbg8"
+    },
+    {
+      "userId": "zd8Xm56Y3QY",
+      "name": "Chapati",
+      "calories": 300,
+      "protein": 6,
+      "carbs": 45,
+      "fat": 10,
+      "mealType": "breakfast",
+      "date": "2026-05-29",
+      "createdAt": "2026-05-29T03:20:25.875Z",
+      "id": "hLFraJXqX9Y"
     }
   ],
   "goals": [
@@ -145,16 +191,10 @@
       "protein": 6,
       "carbs": 45,
       "fat": 10,
-      "category": "bread"
-    },
-    {
-      "id": "2",
-      "name": "Sukuma Wiki (Kales)",
-      "calories": 50,
-      "protein": 3,
-      "carbs": 8,
-      "fat": 1,
-      "category": "vegetable"
+      "category": "bread",
+      "imageUrl": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600&h=400&fit=crop",
+      "benefits": "Good source of complex carbohydrates for sustained energy. Made from whole wheat flour, chapati provides dietary fiber that supports digestion and keeps you full longer. A staple across East Africa.",
+      "cookTips": "Mix 2 cups wheat flour with a pinch of salt and warm water. Knead into a smooth dough, rest 20 min. Roll into thin circles, cook on a dry pan 1–2 min per side until lightly charred. Brush with ghee for richness."
     },
     {
       "id": "3",
@@ -163,7 +203,10 @@
       "protein": 35,
       "carbs": 0,
       "fat": 22,
-      "category": "protein"
+      "category": "protein",
+      "imageUrl": "https://images.unsplash.com/photo-1544025162-d76694265947?w=600&h=400&fit=crop",
+      "benefits": "Excellent high-protein food that supports muscle repair and growth. Grilling over charcoal renders excess fat, making it leaner than pan-fried meat. Rich in B vitamins (B12, niacin) and zinc for immune function.",
+      "cookTips": "Marinate goat or beef in salt, pepper, garlic, and lemon juice for at least 1 hour. Grill over charcoal on medium-high heat, turning every 5–7 min. Rest the meat 5 min before cutting. Serve with kachumbari and ugali."
     },
     {
       "id": "4",
@@ -172,7 +215,10 @@
       "protein": 8,
       "carbs": 75,
       "fat": 2,
-      "category": "grain"
+      "category": "grain",
+      "imageUrl": "https://images.unsplash.com/photo-1574484284002-952d92456975?w=600&h=400&fit=crop",
+      "benefits": "Kenya's staple — provides dense, long-lasting energy through complex carbohydrates. When made with fortified maize flour, it delivers iron and B vitamins. Naturally gluten-free and very filling per calorie.",
+      "cookTips": "Boil 2 cups of water in a pot. Gradually pour in 1½ cups maize flour while stirring constantly to avoid lumps. Reduce heat, stir vigorously for 5–8 min until the ugali pulls from the sides. Serve immediately."
     },
     {
       "id": "5",
@@ -181,7 +227,10 @@
       "protein": 4,
       "carbs": 35,
       "fat": 10,
-      "category": "snack"
+      "category": "snack",
+      "imageUrl": "https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=600&h=400&fit=crop",
+      "benefits": "A quick energy snack popular at breakfast and tea time. Provides fast-digesting carbs for an immediate energy boost. Cardamom spice used in mandazi has anti-inflammatory properties and aids digestion.",
+      "cookTips": "Mix 2 cups flour, 2 tbsp sugar, 1 tsp cardamom, 1 tsp yeast, and warm coconut milk into a soft dough. Rest 1 hour. Roll out, cut into triangles or rounds. Deep-fry in hot oil until golden brown, turning once."
     },
     {
       "id": "6",
@@ -190,7 +239,10 @@
       "protein": 15,
       "carbs": 70,
       "fat": 18,
-      "category": "rice"
+      "category": "rice",
+      "imageUrl": "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=600&h=400&fit=crop",
+      "benefits": "A fragrant Swahili rice dish rich in warming spices like cumin, cardamom, cloves, and cinnamon — all with antioxidant and anti-inflammatory properties. A balanced one-pot meal combining carbs, protein, and fats.",
+      "cookTips": "Fry whole spices (cumin, cardamom, cloves) in oil, add onions until golden. Add meat, brown well, then add soaked basmati rice. Pour in 2 parts water, cover and cook on low 20 min. Rest covered 5 min before serving."
     },
     {
       "id": "7",
@@ -199,7 +251,10 @@
       "protein": 12,
       "carbs": 28,
       "fat": 4,
-      "category": "legume"
+      "category": "legume",
+      "imageUrl": "https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?w=600&h=400&fit=crop",
+      "benefits": "Kidney beans are a powerhouse of plant-based protein and fiber. Excellent for heart health, blood sugar regulation, and gut microbiome. One of the most affordable and nutritious foods available in Kenya.",
+      "cookTips": "Soak beans overnight, drain and boil until soft (1–1.5 hrs). In a separate pan, fry onion, tomato, and spices. Add cooked beans, coconut milk and simmer 15 min to develop a rich sauce. Season with salt and coriander."
     },
     {
       "id": "8",
@@ -208,16 +263,22 @@
       "protein": 1,
       "carbs": 6,
       "fat": 0,
-      "category": "salad"
+      "category": "salad",
+      "imageUrl": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=400&fit=crop",
+      "benefits": "One of the healthiest sides you can eat — almost zero calories with high vitamin C from tomatoes and antioxidants from onions. Fresh chili boosts metabolism. Pairs perfectly with nyama choma to cut through the fat.",
+      "cookTips": "Dice 2 ripe tomatoes and 1 red onion finely. Add fresh coriander leaves, 1 green chili (optional), squeeze of lemon juice, and a pinch of salt. Toss and let sit 10 min for flavors to meld. Serve fresh and cold."
     },
     {
       "id": "9",
-      "name": "Mukimo (Mashed Potatoes with Veggies)",
+      "name": "Mukimo (Mashed Potatoes)",
       "calories": 320,
       "protein": 8,
       "carbs": 55,
       "fat": 8,
-      "category": "main"
+      "category": "main",
+      "imageUrl": "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=600&h=400&fit=crop",
+      "benefits": "A traditional Kikuyu dish combining potatoes, peas, corn, and greens — making it a nutritionally complete meal in one bowl. High in potassium, vitamin C, and fiber. Very filling and comforting.",
+      "cookTips": "Boil potatoes, green peas, corn, and pumpkin leaves together until soft. Drain most water, then mash everything together with a wooden spoon. Add butter or ghee and salt to taste. Mash to your preferred texture — chunky or smooth."
     },
     {
       "id": "10",
@@ -226,7 +287,10 @@
       "protein": 4,
       "carbs": 38,
       "fat": 2,
-      "category": "breakfast"
+      "category": "breakfast",
+      "imageUrl": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&h=400&fit=crop",
+      "benefits": "Fermented uji is a probiotic powerhouse that supports gut health. Made from millet or sorghum flour, it is rich in iron and calcium — especially important for children and pregnant women. Easy to digest and energizing.",
+      "cookTips": "Ferment millet flour mixed with water for 1–2 days. Bring 3 cups water to a boil. Mix fermented flour with cold water into a smooth paste, add to boiling water while stirring. Cook 5 min until thickened. Sweeten with sugar or honey."
     },
     {
       "id": "11",
@@ -235,7 +299,10 @@
       "protein": 32,
       "carbs": 12,
       "fat": 28,
-      "category": "protein"
+      "category": "protein",
+      "imageUrl": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&h=400&fit=crop",
+      "benefits": "A coastal Swahili delicacy — fish is rich in omega-3 fatty acids for heart and brain health. Coconut milk adds healthy medium-chain triglycerides (MCTs). The turmeric and ginger in the marinade have powerful anti-inflammatory effects.",
+      "cookTips": "Score fish and marinate in turmeric, ginger, garlic, and lemon 30 min. Grill or pan-fry until cooked. Prepare sauce: simmer coconut milk with fried onion, tomato, tamarind, and spices. Pour over fish and bake 10 min at 180°C."
     },
     {
       "id": "12",
@@ -244,7 +311,10 @@
       "protein": 5,
       "carbs": 42,
       "fat": 10,
-      "category": "snack"
+      "category": "snack",
+      "imageUrl": "https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=600&h=400&fit=crop",
+      "benefits": "A popular street food snack. Potatoes provide potassium and vitamin C, while the spiced batter adds flavor with minimal extra calories. Better than many fried snacks due to the vegetable base.",
+      "cookTips": "Make a batter from chickpea flour, turmeric, cumin, chili powder, salt, and water. Parboil potato chunks until just tender. Coat in batter and deep-fry in hot oil until crispy and golden. Serve with tamarind chutney."
     },
     {
       "id": "13",
@@ -253,16 +323,22 @@
       "protein": 6,
       "carbs": 35,
       "fat": 18,
-      "category": "snack"
+      "category": "snack",
+      "imageUrl": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&h=400&fit=crop",
+      "benefits": "A coastal Kenyan treat made from lentil or chickpea flour — a good source of plant protein. Onions contain quercetin, a potent antioxidant. Best enjoyed occasionally as a satisfying savory snack.",
+      "cookTips": "Mix black-eyed pea flour with finely sliced onions, green chili, coriander, cumin, and salt. Add just enough water to make a thick batter. Drop spoonfuls into hot oil and fry until golden and crispy on both sides."
     },
     {
       "id": "14",
-      "name": "Mbaazi za Nazi (Pigeon Peas in Coconut)",
+      "name": "Mbaazi za Nazi (Pigeon Peas)",
       "calories": 350,
       "protein": 14,
       "carbs": 40,
       "fat": 16,
-      "category": "legume"
+      "category": "legume",
+      "imageUrl": "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=600&h=400&fit=crop",
+      "benefits": "Pigeon peas are drought-resistant and nutritionally excellent — high in plant protein, folate, and dietary fiber. Coconut milk provides healthy fats. A cornerstone of Coastal Kenyan cuisine and very affordable.",
+      "cookTips": "Soak dried pigeon peas overnight, then boil 45 min until soft. Drain. Fry onion and garlic in oil, add coconut milk and simmer 5 min. Add peas, season with salt and cumin. Simmer 15 min until sauce thickens. Serve with chapati."
     },
     {
       "id": "15",
@@ -271,7 +347,10 @@
       "protein": 3,
       "carbs": 55,
       "fat": 4,
-      "category": "main"
+      "category": "main",
+      "imageUrl": "https://images.unsplash.com/photo-1543353071-087092ec393a?w=600&h=400&fit=crop",
+      "benefits": "Green bananas (matoke) are resistant starch powerhouses — they feed good gut bacteria and improve insulin sensitivity. Rich in potassium and magnesium for heart and muscle health. A light but filling meal.",
+      "cookTips": "Peel green bananas and soak in salted water to prevent browning. Sauté onion, tomato, and garlic with curry powder. Add banana pieces, cover with water or stock. Simmer 25–30 min until bananas are fork-tender and stew has thickened."
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

@@ -1,0 +1,338 @@
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+
+const NAV = [
+  { path: '/dashboard',    label: 'Dashboard',   icon: '📊' },
+  { path: '/food-log',     label: 'Food Log',    icon: '🍽️' },
+  { path: '/my-food-list', label: 'My Foods',    icon: '📋' },
+  { path: '/analytics',   label: 'Analytics',   icon: '📈' },
+  { path: '/goals',       label: 'Goals',       icon: '🎯' },
+  { path: '/profile',     label: 'Profile',     icon: '👤' },
+]
+
+export default function Sidebar({ theme, toggleTheme }) {
+  const [collapsed, setCollapsed] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const current = window.location.pathname
+  const user = JSON.parse(localStorage.getItem('user') || '{}')
+  const initials = user?.name ? user.name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2) : '?'
+
+  function handleLogout() {
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    window.location.href = '/'
+  }
+
+  const SidebarContent = () => (
+    <div className={`sidebar-inner ${collapsed ? 'collapsed' : ''}`}>
+
+      {/* Logo */}
+      <div className="sidebar-logo" onClick={() => window.location.href='/'}>
+        <div className="sidebar-logo-mark">♥</div>
+        {!collapsed && <span className="sidebar-logo-text">NutriTrack</span>}
+      </div>
+
+      {/* Nav links */}
+      <nav className="sidebar-nav">
+        {NAV.map(item => {
+          const active = current === item.path
+          return (
+            <div
+              key={item.path}
+              className={`sidebar-link ${active ? 'active' : ''}`}
+              onClick={() => { window.location.href = item.path; setMobileOpen(false) }}
+              title={collapsed ? item.label : ''}
+            >
+              <span className="sidebar-link-icon">{item.icon}</span>
+              {!collapsed && <span className="sidebar-link-label">{item.label}</span>}
+              {active && !collapsed && <span className="sidebar-link-dot" />}
+            </div>
+          )
+        })}
+      </nav>
+
+      {/* Bottom section */}
+      <div className="sidebar-bottom">
+
+        {/* Theme toggle */}
+        <div className="sidebar-link" onClick={toggleTheme} title={collapsed ? (theme==='light'?'Dark Mode':'Light Mode') : ''}>
+          <span className="sidebar-link-icon">{theme === 'light' ? '🌙' : '☀️'}</span>
+          {!collapsed && <span className="sidebar-link-label">{theme === 'light' ? 'Dark Mode' : 'Light Mode'}</span>}
+        </div>
+
+        {/* Collapse toggle — desktop only */}
+        <div className="sidebar-link sidebar-collapse-btn" onClick={() => setCollapsed(p=>!p)}>
+          <span className="sidebar-link-icon">{collapsed ? '→' : '←'}</span>
+          {!collapsed && <span className="sidebar-link-label">Collapse</span>}
+        </div>
+
+        <div className="sidebar-divider" />
+
+        {/* User + logout */}
+        <div className="sidebar-user">
+          <div className="sidebar-avatar">{initials}</div>
+          {!collapsed && (
+            <div className="sidebar-user-info">
+              <div className="sidebar-user-name">{user?.name?.split(' ')[0] || 'User'}</div>
+              <button className="sidebar-logout" onClick={handleLogout}>Sign out</button>
+            </div>
+          )}
+          {collapsed && (
+            <button className="sidebar-logout-icon" onClick={handleLogout} title="Sign out">⎋</button>
+          )}
+        </div>
+
+      </div>
+    </div>
+  )
+
+  return (
+    <>
+      <style>{sidebarStyle}</style>
+
+      {/* Desktop sidebar */}
+      <aside className={`sidebar ${collapsed ? 'sidebar--collapsed' : ''}`}>
+        <SidebarContent />
+      </aside>
+
+      {/* Mobile top bar */}
+      <div className="sidebar-mobile-bar">
+        <div className="sidebar-logo" onClick={() => window.location.href='/'} style={{ cursor:'pointer' }}>
+          <div className="sidebar-logo-mark">♥</div>
+          <span className="sidebar-logo-text">NutriTrack</span>
+        </div>
+        <div style={{ display:'flex', alignItems:'center', gap:'0.5rem' }}>
+          <button className="sidebar-mobile-theme" onClick={toggleTheme}>{theme==='light'?'🌙':'☀️'}</button>
+          <button className="sidebar-mobile-toggle" onClick={() => setMobileOpen(p=>!p)}>
+            {mobileOpen ? '✕' : '☰'}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile drawer */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <>
+            <motion.div className="sidebar-backdrop" initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }} onClick={() => setMobileOpen(false)} />
+            <motion.aside className="sidebar sidebar--mobile" initial={{ x:'-100%' }} animate={{ x:0 }} exit={{ x:'-100%' }} transition={{ type:'tween', duration:0.25 }}>
+              <SidebarContent />
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
+    </>
+  )
+}
+
+const sidebarStyle = `
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: 240px;
+    background: #fff;
+    border-right: 1px solid rgba(44,36,25,0.08);
+    display: flex;
+    flex-direction: column;
+    z-index: 50;
+    transition: width 0.25s ease;
+    box-shadow: 2px 0 24px rgba(44,36,25,0.04);
+  }
+  .dark .sidebar {
+    background: #141414;
+    border-right-color: rgba(255,255,255,0.06);
+    box-shadow: 2px 0 24px rgba(0,0,0,0.3);
+  }
+  .sidebar--collapsed { width: 68px; }
+  .sidebar--mobile {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: 260px;
+    z-index: 200;
+  }
+
+  .sidebar-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1.25rem 0.75rem;
+    overflow: hidden;
+  }
+  .sidebar-inner.collapsed { padding: 1.25rem 0.5rem; align-items: center; }
+
+  .sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .sidebar-logo:hover { background: rgba(44,36,25,0.04); }
+  .dark .sidebar-logo:hover { background: rgba(255,255,255,0.04); }
+  .sidebar-logo-mark {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--color-moss);
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 13px;
+    flex-shrink: 0;
+  }
+  .sidebar-logo-text {
+    font-family: var(--font-serif);
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--color-bark);
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+  .dark .sidebar-logo-text { color: #F5F0E8; }
+
+  .sidebar-nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    overflow-y: auto;
+  }
+
+  .sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.75rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    position: relative;
+    white-space: nowrap;
+  }
+  .sidebar-link:hover { background: rgba(44,36,25,0.05); }
+  .dark .sidebar-link:hover { background: rgba(255,255,255,0.05); }
+  .sidebar-link.active {
+    background: var(--color-sage-pale);
+    color: var(--color-moss);
+  }
+  .dark .sidebar-link.active {
+    background: rgba(59,109,17,0.15);
+    color: var(--color-sage);
+  }
+  .sidebar-link-icon { font-size: 1.1rem; flex-shrink: 0; width: 22px; text-align: center; }
+  .sidebar-link-label { font-size: 0.875rem; font-weight: 500; color: var(--color-bark); }
+  .dark .sidebar-link-label { color: #D0CEC8; }
+  .sidebar-link.active .sidebar-link-label { color: var(--color-moss); font-weight: 600; }
+  .dark .sidebar-link.active .sidebar-link-label { color: var(--color-sage); }
+  .sidebar-link-dot {
+    margin-left: auto;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--color-moss);
+    flex-shrink: 0;
+  }
+  .dark .sidebar-link-dot { background: var(--color-sage); }
+
+  .sidebar-bottom { display: flex; flex-direction: column; gap: 0.2rem; padding-top: 0.75rem; }
+  .sidebar-divider { height: 1px; background: rgba(44,36,25,0.07); margin: 0.5rem 0; }
+  .dark .sidebar-divider { background: rgba(255,255,255,0.06); }
+  .sidebar-collapse-btn { display: flex; }
+
+  .sidebar-user {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.75rem;
+    border-radius: 12px;
+  }
+  .sidebar-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--color-moss);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+  .dark .sidebar-avatar { background: var(--color-sage); color: var(--color-bark); }
+  .sidebar-user-name {
+    font-size: 0.825rem;
+    font-weight: 600;
+    color: var(--color-bark);
+    white-space: nowrap;
+  }
+  .dark .sidebar-user-name { color: #F5F0E8; }
+  .sidebar-logout {
+    font-size: 0.72rem;
+    color: #ef4444;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    padding: 0;
+    transition: opacity 0.2s;
+  }
+  .sidebar-logout:hover { opacity: 0.7; }
+  .sidebar-logout-icon {
+    font-size: 1rem;
+    color: #ef4444;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+  }
+
+  /* Mobile bar */
+  .sidebar-mobile-bar {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 56px;
+    background: rgba(245,240,232,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(44,36,25,0.08);
+    padding: 0 1.25rem;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 100;
+  }
+  .dark .sidebar-mobile-bar {
+    background: rgba(15,15,15,0.92);
+    border-bottom-color: rgba(255,255,255,0.06);
+  }
+  .sidebar-mobile-toggle {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    border: 1px solid rgba(44,36,25,0.12);
+    background: transparent;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+    color: var(--color-bark);
+  }
+  .dark .sidebar-mobile-toggle { border-color: rgba(255,255,255,0.1); color: #F5F0E8; }
+  .sidebar-mobile-toggle:hover { background: rgba(44,36,25,0.06); }
+  .sidebar-mobile-theme {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(44,36,25,0.12);
+    background: transparent;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .dark .sidebar-mobile-theme { border-color: rgba(255,255,255,0.1); }
+
+  .sidebar-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(44,36,25,0.4);
+    backdrop-filter: blur(2px);
+    z-index: 150;
+  }
+
+  @media (max-width: 768px) {
+    .sidebar:not(.sidebar--mobile) { display: none; }
+    .sidebar-mobile-bar { display: flex; }
+  }
+`
